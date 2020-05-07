@@ -243,3 +243,14 @@ axios({
   console.log(e.code)
 })
 ```
+
+## 接口扩展
+
+- `axios.request(config)`
+- `axios.get(url[, config])`
+- `axios.delete(url[, config])`
+- `axios.head(url[, config])`
+- `axios.options(url[, config])`
+- `axios.post(url[, data[, config]])`
+- `axios.put(url[, data[, config]])`
+- `axios.patch(url[, data[,c onfig]])`

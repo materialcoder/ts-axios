@@ -16,7 +16,7 @@ export type Method =
 
 export interface AxiosRequestConfig {
   /**请求地址 */
-  url: string
+  url?: string
   /**请求方法 */
   method?: Method
   /**请求发送数据 */
@@ -64,4 +64,25 @@ export interface AxiosError extends Error {
   request?: any
   /**响应数据 */
   response?: AxiosResponse
+}
+
+/**
+ * Axios 类型接口
+ */
+export interface Axios {
+  request(config: AxiosRequestConfig): AxiosPromise
+  get(url: string, config?: AxiosRequestConfig): AxiosPromise
+  delete(url: string, config?: AxiosRequestConfig): AxiosPromise
+  head(url: string, config?: AxiosRequestConfig): AxiosPromise
+  options(url: string, config?: AxiosRequestConfig): AxiosPromise
+  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+}
+
+/**
+ * 集成Axios的混合类型接口
+ */
+export interface AxiosInstance extends Axios {
+  (config: AxiosRequestConfig): AxiosPromise
 }
