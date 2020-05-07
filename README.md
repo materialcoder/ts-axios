@@ -277,3 +277,44 @@ axios('extend/post', {
 ```
 
 ## 响应式数据支持泛型
+
+## axios 拦截器实现
+
+```js
+axios.interceptors.request.use(function(config) {
+  // 在发送请求之前可以做一些事情
+  return config
+}, function(error) {
+  // 处理请求错误
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use(function(response) {
+  // 处理响应数据
+  return response
+}, function (error) {
+  // 处理响应错误
+  return Promise.reject(error)
+})
+```
+
+可以添加多个拦截器，request的拦截器后添加的先执行，response的拦截器先添加的先执行
+
+```js
+axios.interceptors.request.use(function(config) {
+  config.header.test += '1'
+  return config
+})
+
+axios.interceptors.request.use(function(config) {
+  config.header.test += '2'
+  return config
+})
+```
+
+此外，还要支持删除某个拦截器
+
+```js
+const myInterceptor = axios.interceptors.request.use(function(config) {...})
+axios.interceptors.request.eject(myInterceptor)
+```
