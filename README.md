@@ -185,3 +185,22 @@ axios({
     b: 2
   }
 })
+```
+
+## 获取响应数据
+
+```js
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: {
+    a: 1,
+    b: 2
+  }
+}).then((res) => {
+  console.log(res)
+})
+```
+
+获取 `res` 对象，该对象中要包括返回的数据 `data`、`HTTP` 状态码 `status`、状态消息 `statusText`、响应头 `headers`、请求配置对象 `config` 以及请求的 `XMLHTTPRequest` 对象实例 `request`
+
