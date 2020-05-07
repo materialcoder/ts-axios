@@ -160,8 +160,8 @@ axios({
 
 ```js
 axios({
-  method: 'get',
-  url: '/base/get?foo=bar',
+  method: 'post',
+  url: '/base/post',
   data: {
     a: 1,
     b: 2
@@ -170,3 +170,18 @@ axios({
 ```
 
 需要将data转换成json字符串的格式
+
+## 处理请求 header
+
+```js
+axios({
+  method: 'post',
+  url: '/base/post',
+  headers: {
+    'Content-Type': 'application/json;chartset=utf-8'
+  },
+  data: {
+    a: 1,
+    b: 2
+  }
+})

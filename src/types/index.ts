@@ -23,4 +23,6 @@ export interface AxiosRequestConfig {
   data?: any
   /**请求参数 */
   params?: any
+  /**请求头 */
+  headers?: any
 }
