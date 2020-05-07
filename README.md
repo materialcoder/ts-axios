@@ -254,3 +254,24 @@ axios({
 - `axios.post(url[, data[, config]])`
 - `axios.put(url[, data[, config]])`
 - `axios.patch(url[, data[,c onfig]])`
+
+## axios 函数重载
+
+```js
+axios({
+  url: 'extend/post',
+  method: 'post',
+  data: {
+    msg: 'hi'
+  }
+})
+```
+将 axios 变为支持传入两个参数：
+```js
+axios('extend/post', {
+  method: 'post',
+  data: {
+    msg: 'hi'
+  }
+})
+```
