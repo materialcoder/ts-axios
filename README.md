@@ -324,3 +324,15 @@ axios.interceptors.request.eject(myInterceptor)
 defaults
 
 ## 合并配置项
+
+## 请求和响应配置化
+
+```js
+axios({
+  transformRequest:...,
+  transformResponse: ...,
+  ...
+})
+```
+
+## 扩展 axios.create 静态接口
