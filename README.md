@@ -228,3 +228,18 @@ x-powered-by: Express
 **超时错误**
 
 **非200状态码**
+
+## 错误信息增强
+
+```js
+axios({
+  method: 'get',
+  url: '/error/get'
+}).then((res) => {
+  console.log(res)
+}).catch((e: AxiosError) => {
+  console.log(e.message)
+  console.log(e.request)
+  console.log(e.code)
+})
+```

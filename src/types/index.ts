@@ -50,3 +50,18 @@ export interface AxiosResponse {
 }
 
 export interface AxiosPromise extends Promise<AxiosResponse> {}
+
+/**
+ * 错误信息接口
+ */
+export interface AxiosError extends Error {
+  isAxiosError: boolean
+  /**请求参数 */
+  config: AxiosRequestConfig
+  /**返回状态码 */
+  code?: string | null
+  /**XMLHttpRequst */
+  request?: any
+  /**响应数据 */
+  response?: AxiosResponse
+}
