@@ -34,3 +34,124 @@ axios({
   }
 })
 ```
+
+## 处理请求URL
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
+    a: 1,
+    b: 2
+  }
+})
+```
+
+> /base/get?a=1&b=2
+
+**参数值为数组**
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
+    foo: ['bar', 'baz']
+  }
+})
+```
+
+> /base/get?foo[]=bar&foo[]=baz
+
+**参数值为对象**
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
+    foo: {
+      bar: 'baz'
+    }
+  }
+})
+```
+
+> /base/get?foo=%7B%22bar%22:%22baz%22%7D
+
+**参数值为Date类型**
+
+```js
+const date = new Date()
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
+    date
+  }
+})
+```
+
+> /base/get?date=2020-05-07T11:29:40.030Z
+
+**参数中含特殊字符**
+
+对于字符 `@`、`:`、`$`、`.`、` `、`[`、`]` 允许出现在 URL 中，不希望被转义
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
+    foo: '@:$ '
+  }
+})
+```
+
+> /base/get?foo=@:$+, 空格会转换成 + 
+
+**空值忽略**
+
+对于为 null 或 undefined 的属性，不会添加到 URL 参数中
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
+    foo: 'bar',
+    baz: null
+  }
+})
+```
+
+> /base/get?foo=bar
+
+**丢弃URL中的哈希标记**
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get#hash',
+  params: {
+    foo: 'bar'
+  }
+})
+```
+
+> /base/get?foo=bar
+
+**保留URL中已存在的参数**
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get?foo=bar',
+  params: {
+    bar: 'baz'
+  }
+})
+```
+
+> /base/get?foo=bar&bar=baz

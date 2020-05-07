@@ -22,5 +22,5 @@ export interface AxiosRequestConfig {
   /**请求发送数据 */
   data?: any
   /**请求参数 */
-  parmas?: any
+  params?: any
 }
