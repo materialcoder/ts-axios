@@ -155,3 +155,18 @@ axios({
 ```
 
 > /base/get?foo=bar&bar=baz
+
+## 处理请求 body 数据
+
+```js
+axios({
+  method: 'get',
+  url: '/base/get?foo=bar',
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+```
+
+需要将data转换成json字符串的格式
