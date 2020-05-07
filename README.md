@@ -318,3 +318,9 @@ axios.interceptors.request.use(function(config) {
 const myInterceptor = axios.interceptors.request.use(function(config) {...})
 axios.interceptors.request.eject(myInterceptor)
 ```
+
+## 默认配置
+
+defaults
+
+## 合并配置项

@@ -29,6 +29,7 @@ export interface AxiosRequestConfig {
   responseType?: XMLHttpRequestResponseType
   /**响应超时时间 单位 毫秒 */
   timeout?: number
+  [propName: string]: any
 }
 
 /**
@@ -70,6 +71,7 @@ export interface AxiosError extends Error {
  * Axios 类型接口
  */
 export interface Axios {
+  defaults: AxiosRequestConfig
   interceptors: {
     request: AxiosInterceptorManager<AxiosRequestConfig>
     response: AxiosInterceptorManager<AxiosResponse>
