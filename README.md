@@ -204,3 +204,19 @@ axios({
 
 获取 `res` 对象，该对象中要包括返回的数据 `data`、`HTTP` 状态码 `status`、状态消息 `statusText`、响应头 `headers`、请求配置对象 `config` 以及请求的 `XMLHTTPRequest` 对象实例 `request`
 
+## 处理响应header
+
+```
+connection: keep-alive
+content-length: 13
+content-type: application/json; charset=utf-8
+date: Thu, 07 May 2020 08:28:53 GMT
+etag: W/"d-Ssxx4FRxEutDLwo2+xkkxKc4y0k"
+x-powered-by: Express
+```
+
+将上面的格式转换为对象
+
+## 处理响应data
+
+默认将json字符串转换为json对象
