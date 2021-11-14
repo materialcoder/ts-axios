@@ -7,6 +7,7 @@ const webpackConfig = require('./webpack.config')
 const cookieParser = require('cookie-parser')
 const multiparty = require('connect-multiparty')
 const path = require('path')
+const atob = require('atob')
 
 // require('./server2')
 
@@ -188,6 +189,19 @@ function registerMoreRouter() {
   router.post('/more/upload', (req, res) => {
     console.log(req.body, req.files)
     res.end('upload success')
+  })
+
+  router.post('/more/post', (req, res) => {
+    const auth = req.headers.authorization
+    const [type, credentials] = auth.split(' ')
+    console.log(atob(credentials))
+    const [username, password] = atob(credentials).split(':')
+    if (type === 'Basic' && username === 'hhh' && password === '123456') {
+      res.json(req.body)
+    } else {
+      res.status(401)
+      res.end('UnAuthorization')
+    }
   })
 }
 
