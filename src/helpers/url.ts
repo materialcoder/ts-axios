@@ -76,6 +76,26 @@ export function buildURL(url: string, params?: any, paramsSerializer?: (params: 
 }
 
 /**
+ * 判断一个地址是否是绝对路径 
+ * 以// 或者 xxx:// 开头
+ * @param {string} url
+ * @return {*}  {boolean}
+ */
+export function isAbsoluteURL(url: string): boolean {
+  return /^([a-z][a-z\d+\-\.]*:)?\/\//i.test(url);
+}
+
+/**
+ * 合并 URL
+ * @param {string} baseURL
+ * @param {string} [relativeURL]
+ * @return {*}  {string}
+ */
+export function combineURL(baseURL: string, relativeURL?: string): string {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
+}
+
+/**
  * 判断是否同源
  * @param {string} requestURL
  * @return {*}  {boolean}

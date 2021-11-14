@@ -114,34 +114,44 @@ import qs from 'qs';
 
 // ========================================
 
-axios.get('/more/get', {
-  params: new URLSearchParams('a=b&c=d')
-}).then(res => {
-  console.log(res);
-})
+// axios.get('/more/get', {
+//   params: new URLSearchParams('a=b&c=d')
+// }).then(res => {
+//   console.log(res);
+// })
 
-axios.get('/more/get', {
-  params: {
-    a: 1,
-    b: 2,
-    c: ['a', 'b', 'c']
-  }
-}).then(res => {
-  console.log(res);
-})
+// axios.get('/more/get', {
+//   params: {
+//     a: 1,
+//     b: 2,
+//     c: ['a', 'b', 'c']
+//   }
+// }).then(res => {
+//   console.log(res);
+// })
+
+// const instance = axios.create({
+//   paramsSerializer(params) {
+//     return qs.stringify(params, {arrayFormat: 'brackets'})
+//   }
+// });
+
+// instance.get('/more/get', {
+//   params: {
+//     a: 1,
+//     b: 2,
+//     c: ['a', 'b', 'c']
+//   }
+// }).then(res => {
+//   console.log(res);
+// })
+
+// ========================================
 
 const instance = axios.create({
-  paramsSerializer(params) {
-    return qs.stringify(params, {arrayFormat: 'brackets'})
-  }
-});
-
-instance.get('/more/get', {
-  params: {
-    a: 1,
-    b: 2,
-    c: ['a', 'b', 'c']
-  }
-}).then(res => {
-  console.log(res);
+  baseURL: 'https://img.mukewang.com'
 })
+
+instance.get('5cc01a7b0001a33718720632.jpg');
+
+instance.get('https://img.mukewang.com/5cc01a7b0001a33718720632.jpg')
