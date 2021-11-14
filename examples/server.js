@@ -203,6 +203,11 @@ function registerMoreRouter() {
       res.end('UnAuthorization')
     }
   })
+
+  router.get('/more/304', (req, res) => {
+    res.status(304)
+    res.end()
+  })
 }
 
 app.use(router)
