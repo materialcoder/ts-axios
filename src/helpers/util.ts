@@ -34,6 +34,15 @@ export function isFormData(val: any): val is FormData {
 }
 
 /**
+ * 判断值是否为URLSearchParams
+ * @param {*} val
+ * @return {*}  {val is URLSearchParams}
+ */
+export function isURLSearchParams(val: any): val is URLSearchParams {
+  return typeof val !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
  * 扩展属性方法
  * @param to
  * @param from

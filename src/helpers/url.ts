@@ -1,4 +1,4 @@
-import { isDate, isPlainObject } from './util'
+import { isDate, isPlainObject, isURLSearchParams } from './util'
 
 interface URLOrigin {
   protocol: string;
@@ -25,34 +25,44 @@ function encode(val: string): string {
  * @param url 请求地址
  * @param params 请求参数
  */
-export function buildURL(url: string, params?: any): string {
+export function buildURL(url: string, params?: any, paramsSerializer?: (params: any) => string): string {
   if (!params) {
     return url
   }
-  const parts: string[] = []
-  Object.keys(params).forEach(key => {
-    const val = params[key]
-    if (val === null || typeof val === 'undefined') {
-      return
-    }
-    let values = []
-    if (Array.isArray(val)) {
-      // foo: ['bar', 'baz'] => foo[]=bar&foo[]=baz
-      values = val
-      key += '[]'
-    } else {
-      values = [val]
-    }
-    values.forEach(val => {
-      if (isDate(val)) {
-        val = val.toISOString()
-      } else if (isPlainObject(val)) {
-        val = JSON.stringify(val)
+
+  let serializeParams;
+
+  if (paramsSerializer) { // 1. 是否有自定义的序列化参数方法
+    serializeParams = paramsSerializer(params);
+  } else if (isURLSearchParams(params)) { // 2. params 是否是 URLParams
+    serializeParams = params.toString();
+  } else { // 3. 序列化
+    const parts: string[] = []
+    Object.keys(params).forEach(key => {
+      const val = params[key]
+      if (val === null || typeof val === 'undefined') {
+        return
       }
-      parts.push(`${encode(key)}=${encode(val)}`)
+      let values = []
+      if (Array.isArray(val)) {
+        // foo: ['bar', 'baz'] => foo[]=bar&foo[]=baz
+        values = val
+        key += '[]'
+      } else {
+        values = [val]
+      }
+      values.forEach(val => {
+        if (isDate(val)) {
+          val = val.toISOString()
+        } else if (isPlainObject(val)) {
+          val = JSON.stringify(val)
+        }
+        parts.push(`${encode(key)}=${encode(val)}`)
+      })
     })
-  })
-  let serializeParams = parts.join('&')
+    serializeParams = parts.join('&')
+  }
+
   if (serializeParams) {
     const markIndex = url.indexOf('#')
     // 去掉哈希值
