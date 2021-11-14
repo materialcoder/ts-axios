@@ -25,6 +25,15 @@ export function isPlainObject(val: any): boolean {
 }
 
 /**
+ * 判断值是否为formData
+ * @param {*} val
+ * @return {*}  {val is FormData}
+ */
+export function isFormData(val: any): val is FormData {
+  return typeof val !== 'undefined' && val instanceof FormData;
+}
+
+/**
  * 扩展属性方法
  * @param to
  * @param from
