@@ -148,10 +148,41 @@ import qs from 'qs';
 
 // ========================================
 
-const instance = axios.create({
-  baseURL: 'https://img.mukewang.com'
+// const instance = axios.create({
+//   baseURL: 'https://img.mukewang.com'
+// })
+
+// instance.get('5cc01a7b0001a33718720632.jpg');
+
+// instance.get('https://img.mukewang.com/5cc01a7b0001a33718720632.jpg')
+
+// ========================================
+
+function getA() {
+  return axios.get('/more/A')
+}
+
+function getB() {
+  return axios.get('/more/B')
+}
+
+axios.all([getA(), getB()]).then(axios.spread((resA, resB) => {
+  console.log(resA.data);
+  console.log(resB.data);
+}));
+
+axios.all([getA(), getB()]).then(([resA, resB]) => {
+  console.log(resA.data);
+  console.log(resB.data);
 })
 
-instance.get('5cc01a7b0001a33718720632.jpg');
+const fakeConfig = {
+  baseURL: 'https://www.baidu.com',
+  url: '/user/123',
+  params: {
+    name: '111',
+    age: '222'
+  }
+}
 
-instance.get('https://img.mukewang.com/5cc01a7b0001a33718720632.jpg')
+console.log(axios.getUrl(fakeConfig));

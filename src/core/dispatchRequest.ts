@@ -32,7 +32,7 @@ function processConfig(config: AxiosRequestConfig): void {
  * 处理 config 中的 URL
  * @param config
  */
-function transformUrl(config: AxiosRequestConfig): string {
+export function transformUrl(config: AxiosRequestConfig): string {
   let { url, params, paramsSerializer, baseURL } = config;
   // 如果配了 baseURL 并且 url 不是绝对路径的话，就做一下拼接
   if (baseURL && !isAbsoluteURL(url!)) {
