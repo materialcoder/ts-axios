@@ -10,6 +10,8 @@ import transform from './transform'
  * @returns void
  */
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
+  // 发送请求前检测
+  throwIfCancellationRequested(config);
   processConfig(config)
   return xhr(config).then(res => {
     return transformResponseData(res)
@@ -42,4 +44,14 @@ function transformUrl(config: AxiosRequestConfig): string {
 function transformResponseData(res: AxiosResponse): AxiosResponse {
   res.data = transform(res.data, res.headers, res.config.transformResponse)
   return res
+}
+
+/**
+ * 判断请求是否被取消了，如果取消了的话就抛出异常
+ * @param config AxiosRequestConfig
+ */
+function throwIfCancellationRequested(config: AxiosRequestConfig): void {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested()
+  }
 }

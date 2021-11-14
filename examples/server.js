@@ -10,22 +10,26 @@ const router = express.Router()
 const app = express()
 const compiler = webpack(webpackConfig)
 
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: '/__build__/',
-  stats: {
-    colors: true,
-    chunks: true
-  }
-}))
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: '/__build__/',
+    stats: {
+      colors: true,
+      chunks: true
+    }
+  })
+)
 
 app.use(webpackHotMiddleware(compiler))
 
 app.use(express.static(__dirname))
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+)
 
 registerSimpleRouter()
 registerBaseRouter()
@@ -33,6 +37,7 @@ registerErrorRouter()
 registerExtendRouter()
 registerInterceptorRouter()
 registerConfigRouter()
+registerCancelRouter()
 
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
@@ -46,15 +51,15 @@ function registerBaseRouter() {
   router.get('/base/get', function(req, res) {
     res.json(req.query)
   })
-  
+
   router.post('/base/post', function(req, res) {
     res.json(req.body)
   })
-  
+
   router.post('/base/buffer', function(req, res) {
     let msg = []
-    req.on('data', (chunk) => {
-      if(chunk) {
+    req.on('data', chunk => {
+      if (chunk) {
         msg.push(chunk)
       }
     })
@@ -67,7 +72,7 @@ function registerBaseRouter() {
 
 function registerErrorRouter() {
   router.get('/error/get', function(req, res) {
-    if(Math.random() > 0.5) {
+    if (Math.random() > 0.5) {
       res.json({
         msg: 'hello world'
       })
@@ -76,9 +81,9 @@ function registerErrorRouter() {
       res.end()
     }
   })
-  
-  router.get('/error/timeout', function(req,res) {
-    setTimeout(()=>{
+
+  router.get('/error/timeout', function(req, res) {
+    setTimeout(() => {
       res.json({
         msg: 'hello world'
       })
@@ -141,6 +146,19 @@ function registerConfigRouter() {
   })
 }
 
+function registerCancelRouter() {
+  router.get('/cancel/get', function(req, res) {
+    setTimeout(() => {
+      res.json('hello')
+    }, 1000)
+  })
+
+  router.post('/cancel/post', function(req, res) {
+    setTimeout(() => {
+      res.json(req.body)
+    }, 1000)
+  })
+}
 
 app.use(router)
 

@@ -336,3 +336,36 @@ axios({
 ```
 
 ## 扩展 axios.create 静态接口
+
+## 取消功能
+
+```js
+const cancelToken = axios.CancelToken
+const source = CancelToken.source()
+axios.get('/user/1234', {
+  cancelToken: source.token
+}).catch(function(e) {
+  if (axios.isCancel(e)) {
+    console.log('Request canceled', e.message)
+  } else {
+    // 处理错误
+  }
+})
+
+// 取消请求
+source.cancel('Operation canceled by the user.')
+```
+
+或者：
+
+```js
+const CancelToken = axios.CancelToken
+let cancel
+axios.get('/user/1234', {
+  cancelToken: new CancelToken(function executor(c) {
+    cancel = c
+  })
+})
+// 取消请求
+cancel()
+```

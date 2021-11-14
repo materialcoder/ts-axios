@@ -15,24 +15,26 @@ export type Method =
   | 'PATCH'
 
 export interface AxiosRequestConfig {
-  /**请求地址 */
+  /** 请求地址 */
   url?: string
-  /**请求方法 */
+  /** 请求方法 */
   method?: Method
-  /**请求发送数据 */
+  /** 请求发送数据 */
   data?: any
-  /**请求参数 */
+  /** 请求参数 */
   params?: any
-  /**请求头 */
+  /** 请求头 */
   headers?: any
-  /**响应数据类型 */
+  /** 响应数据类型 */
   responseType?: XMLHttpRequestResponseType
-  /**响应超时时间 单位 毫秒 */
+  /** 响应超时时间 单位 毫秒 */
   timeout?: number
-  /**请求配置项 */
+  /** 请求配置项 */
   transformRequest?: AxiosTransformer | AxiosTransformer[]
-  /**响应配置项 */
+  /** 响应配置项 */
   transformResponse?: AxiosTransformer | AxiosTransformer[]
+  /** 取消请求 */
+  cancelToken?: CancelToken
   [propName: string]: any
 }
 
@@ -40,17 +42,17 @@ export interface AxiosRequestConfig {
  * 响应数据接口
  */
 export interface AxiosResponse<T = any> {
-  /**响应数据 */
+  /** 响应数据 */
   data: T
-  /**响应状态码 */
+  /** 响应状态码 */
   status: number
-  /**状态消息 */
+  /** 状态消息 */
   statusText: string
-  /**响应头 */
+  /** 响应头 */
   headers: any
-  /**请求参数 */
+  /** 请求参数 */
   config: AxiosRequestConfig
-  /**请求的 XMLHTTPRequest 对象实例 */
+  /** 请求的 XMLHTTPRequest 对象实例 */
   request: any
 }
 
@@ -61,13 +63,13 @@ export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
  */
 export interface AxiosError extends Error {
   isAxiosError: boolean
-  /**请求参数 */
+  /** 请求参数 */
   config: AxiosRequestConfig
-  /**返回状态码 */
+  /** 返回状态码 */
   code?: string | null
-  /**XMLHttpRequst */
+  /** XMLHttpRequst */
   request?: any
-  /**响应数据 */
+  /** 响应数据 */
   response?: AxiosResponse
 }
 
@@ -103,6 +105,10 @@ export interface AxiosInstance extends Axios {
  */
 export interface AxiosStatic extends AxiosInstance {
   create(config?: AxiosRequestConfig): AxiosInstance
+
+  CancelToken: CancelTokenStatic
+  Cancel: CancelStatic
+  isCancel: (value: any) => boolean
 }
 
 /**
@@ -123,4 +129,46 @@ export interface RejectedFn {
 
 export interface AxiosTransformer {
   (data: any, headers?: any): any
+}
+
+/**
+ * CancelToken 实例 接口
+ */
+export interface CancelToken {
+  promise: Promise<Cancel>
+  reason?: Cancel
+
+  throwIfRequested(): void;
+}
+
+/**
+ * 取消方法 接口
+ */
+export interface Canceler {
+  (message?: string): void
+}
+
+export interface CancelExecutor {
+  (cancel: Canceler): void
+}
+
+export interface CancelTokenSource {
+  token: CancelToken
+  cancel: Canceler
+}
+
+/**
+ * CancelToken 类类型
+ */
+export interface CancelTokenStatic {
+  new(executor: CancelExecutor): CancelToken
+  source(): CancelTokenSource
+}
+
+export interface Cancel {
+  message?: string
+}
+
+export interface CancelStatic {
+  new(message?:string): Cancel
 }
