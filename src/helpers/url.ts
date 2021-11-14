@@ -1,5 +1,10 @@
 import { isDate, isPlainObject } from './util'
 
+interface URLOrigin {
+  protocol: string;
+  host: string;
+}
+
 /**
  * 进行URL编码，并处理部分特殊字符
  * @param val
@@ -58,4 +63,27 @@ export function buildURL(url: string, params?: any): string {
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializeParams
   }
   return url
+}
+
+/**
+ * 判断是否同源
+ * @param {string} requestURL
+ * @return {*}  {boolean}
+ */
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parseOrigin = resolveURL(requestURL);
+  return parseOrigin.protocol === currentOrigin.protocol && parseOrigin.host === currentOrigin.host;
+}
+
+// 巧妙使用 a 标签获取协议和域名
+const urlParsingNode = document.createElement('a');
+const currentOrigin = resolveURL(window.location.href);
+
+function resolveURL(url: string): URLOrigin {
+  urlParsingNode.setAttribute('href', url);
+  const { protocol, host } = urlParsingNode;
+  return {
+    protocol,
+    host
+  }
 }
