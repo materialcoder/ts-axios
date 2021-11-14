@@ -4,6 +4,9 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('./webpack.config')
+const cookieParser = require('cookie-parser')
+
+// require('./server2')
 
 const router = express.Router()
 
@@ -31,6 +34,8 @@ app.use(
   })
 )
 
+app.use(cookieParser())
+
 registerSimpleRouter()
 registerBaseRouter()
 registerErrorRouter()
@@ -38,6 +43,7 @@ registerExtendRouter()
 registerInterceptorRouter()
 registerConfigRouter()
 registerCancelRouter()
+registerMoreRouter()
 
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
@@ -157,6 +163,12 @@ function registerCancelRouter() {
     setTimeout(() => {
       res.json(req.body)
     }, 1000)
+  })
+}
+
+function registerMoreRouter() {
+  router.get('/more/get', (req, res) => {
+    res.json(req.cookies)
   })
 }
 

@@ -34,7 +34,9 @@ export interface AxiosRequestConfig {
   /** 响应配置项 */
   transformResponse?: AxiosTransformer | AxiosTransformer[]
   /** 取消请求 */
-  cancelToken?: CancelToken
+  cancelToken?: CancelToken;
+  withCredentials?: boolean;
+
   [propName: string]: any
 }
 

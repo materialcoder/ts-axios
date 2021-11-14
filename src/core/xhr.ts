@@ -16,7 +16,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       headers,
       responseType,
       timeout,
-      cancelToken
+      cancelToken,
+      withCredentials
     } = config
 
     const request = new XMLHttpRequest()
@@ -29,6 +30,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     // 设置请求超时时间
     if (timeout) {
       request.timeout = timeout
+    }
+
+    // 携带跨域cookie
+    if (withCredentials) {
+      request.withCredentials = withCredentials;
     }
 
     // method 必须是大写；默认异步
